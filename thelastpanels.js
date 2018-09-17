@@ -7,22 +7,46 @@ function setup() {
 }
 
 function draw() {
-  background(200,1);
+  background(0,150);
 	translate(width/2, height/2);
 	//ang = spiral(100,50, ang, 74);
 	//panels(40,width,pain,45);
-	lissajous(2);
+	let v = frameCount;
+	
+	lissajous(color(0,220,50,random(200)));
 	//if (frameCount%10 == 0 || frameCount%11 == 0) pain = !pain
 }
 
-function lissajous (natural = 1,a = 120){
+function parameters(A = 200, B = 200, a = 0, b = 0,  delta = 0){
+	let params = [];
+	if (frameCount%60 == 0){
+		a = random(1,5);
+		b = random(1,5);
+		A = random(200,250);
+		B = random(200,250);
+	}
+	return params;
+}
+function lissajous (colored = color(250), A = random(300,350), B = random(200,210),  delta = 0, a = 1, b = 2){
 	push();
 	scale(1);
-	stroke(2);
-	strokeWeight(3);
-	var x = frameCount;
+	stroke(colored);
+	strokeWeight(0.5);
+	delta = frameCount;
+	if (frameCount%120 == 0){
+		a = random(1,5);
+		b = random(1,5);
+	}
+	let x1, y1, x2, y2;
 	//point(a*cos(millis()),a*2*sin(natural*millis()));
-	line(a*cos(x),a*sin(x),a*cos(x+1),a*sin(x+1));
+	for (let t = 1; t <= 5*360; t++){
+		x1= A*sin(a*t + delta);
+		y1= B*sin(b*(t));
+		x2= A*sin(a*(t+2) + delta);
+		y2= B*sin(b*(t+2));
+		line(x1,y1,x2,y2);	
+	}
+	
 	//line(a*cos(millis()),a*2*sin(natural*millis()),a*cos(millis()+1/millis()),a*2*sin(natural*millis()+1/millis()));
 	pop();
 } 
