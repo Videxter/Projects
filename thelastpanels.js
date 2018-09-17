@@ -1,41 +1,29 @@
 var pain = false, ang = 0;
-
+var abLissa = [1,2];
 function setup() {
-  createCanvas(windowWidth, 600);
+  createCanvas(windowWidth, 500);
 	angleMode(DEGREES);
   frameRate(30);
 }
 
 function draw() {
-  background(0,150);
+  background(0,15);
 	translate(width/2, height/2);
 	//ang = spiral(100,50, ang, 74);
-	//panels(40,width,pain,45);
-	let v = frameCount;
-	
-	lissajous(color(0,220,50,random(200)));
-	//if (frameCount%10 == 0 || frameCount%11 == 0) pain = !pain
+	abLissa = lissajous(abLissa[0], abLissa[1], color(0,220,50,random(200)));
+	panels(40,width,pain,45);	
+	if (frameCount%10 == 0 || frameCount%11 == 0) pain = !pain
 }
 
-function parameters(A = 200, B = 200, a = 0, b = 0,  delta = 0){
-	let params = [];
-	if (frameCount%60 == 0){
-		a = random(1,5);
-		b = random(1,5);
-		A = random(200,250);
-		B = random(200,250);
-	}
-	return params;
-}
-function lissajous (colored = color(250), A = random(300,350), B = random(200,210),  delta = 0, a = 1, b = 2){
+function lissajous (a = 1, b = 2, colored = color(250), A = random(600,650), B = random(200,210),  delta = 0){
 	push();
 	scale(1);
 	stroke(colored);
 	strokeWeight(0.5);
 	delta = frameCount;
-	if (frameCount%120 == 0){
-		a = random(1,5);
-		b = random(1,5);
+	if (frameCount%240 == 0){
+		a = round(random(1,10));
+		b = round(random(1,10));
 	}
 	let x1, y1, x2, y2;
 	//point(a*cos(millis()),a*2*sin(natural*millis()));
@@ -46,9 +34,8 @@ function lissajous (colored = color(250), A = random(300,350), B = random(200,21
 		y2= B*sin(b*(t+2));
 		line(x1,y1,x2,y2);	
 	}
-	
-	//line(a*cos(millis()),a*2*sin(natural*millis()),a*cos(millis()+1/millis()),a*2*sin(natural*millis()+1/millis()));
 	pop();
+	return [a,b];
 } 
 
 function panels (weight = 80, widht = windowWidth , paint = true, angle=45 , rectan = 1) {
